@@ -1,10 +1,10 @@
-package com.syrion.hommunity.auth_service;
+package com.syrion.hommunity.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuthServiceApplicationTests {
+class AuthApplicationTests {
 
 	@Test
 	void contextLoads() {
