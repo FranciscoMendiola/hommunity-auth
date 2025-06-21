@@ -33,8 +33,8 @@ public class Usuario {
 
     @Column(name = "apellido_materno")
     private String apellidoMaterno;
-
     @Column(name = "correo")
+
     private String correo;
 
     @Column(name = "contraseña")
@@ -58,4 +58,3 @@ public class Usuario {
     @JoinColumn(name = "id_familia", referencedColumnName = "id_familia")
     private Familia idFamilia;
 }
-

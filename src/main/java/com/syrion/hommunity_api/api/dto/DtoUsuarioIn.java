@@ -12,42 +12,44 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@Entity
 @Getter
 @Setter
 @Table(name = "usuario")
 public class DtoUsuarioIn{
 
-    @Column(name = "nombre")
+    @JsonProperty("nombre")
     @NotNull(message = "El nombre es obligatorio") 
     private String nombre;
 
-    @Column(name = "apellido_paterno")
+    @JsonProperty("apellidoPaterno")
     @NotNull(message = "El apellido paterno es obligatorio")
     private String apellidoPaterno;
 
-    @Column(name = "apellido_materno")
+    @JsonProperty("apellidoMaterno")
     private String apellidoMaterno;
 
-    @Column(name = "correo")
+    @JsonProperty("correo")
     @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="El correo tiene un formato inválido")
     @NotNull(message = "El correo es obligatorio")
     private String correo;
 
-    @Column(name = "contraseña")
+    @JsonProperty("contraseña")
     @NotNull(message = "La contraseña es obligatoria")
     private String contraseña;
 
-    @Column(name = "foto_identificacion")
+    @JsonProperty("fotoIdentificacion")
     @NotNull(message = "La foto de identificación es obligatoria")
     private String fotoIdentificacion;
 
+    @JsonProperty("idZona")
     @ManyToOne
     @JoinColumn(name = "id_zona", referencedColumnName = "id_zona")
     private Zona idZona;
-
+    
+    @JsonProperty("IdFamilia")
     @ManyToOne
     @JoinColumn(name = "id_familia", referencedColumnName = "id_familia")
     private Familia idFamilia;

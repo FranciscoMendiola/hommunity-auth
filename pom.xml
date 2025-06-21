@@ -8,10 +8,10 @@
         <version>3.5.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.syrion</groupId>
-    <artifactId>hommunity-api</artifactId>
+    <groupId>com.syrion</groupId> <!-- ola Yio, ola chesko -->
+    <artifactId>hommunity-Api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>hommunity-api</name>
+    <name>hommunity-Api</name>
     <description>API for Hommunity, built with Spring Boot and connected to AWS RDS (PostgreSQL)</description>
     <url/>
     <licenses>
@@ -34,10 +34,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        </dependency> 
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

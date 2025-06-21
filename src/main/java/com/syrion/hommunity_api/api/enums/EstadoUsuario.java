@@ -2,8 +2,7 @@ package com.syrion.hommunity_api.api.enums;
 
 public enum EstadoUsuario {
     PENDIENTE("pendiente"),
-    APROBADO("aprobado"),
-    RECHAZADO("rechazado");
+    APROBADO("aprobado");
 
     private final String valor;
 

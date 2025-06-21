@@ -1,9 +1,5 @@
 package com.syrion.hommunity_api.api.entity;
 
-import java.sql.Timestamp;
-
-import com.syrion.hommunity_api.api.enums.EstadoUsuario;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,13 +20,7 @@ public class Rol {
     @Column(name = "id_rol")
     private Long idRol;
 
-    @Column(name = "nombre")
-    private String nombre;
-
-    @Column(name = "estado")
-    private EstadoUsuario estado;
-
-    @Column(name = "fecha_registro")
-    private Timestamp fechaRegistro;
+    @Column(name = "nombre_rol")
+    private String nombreRol;
 }
 

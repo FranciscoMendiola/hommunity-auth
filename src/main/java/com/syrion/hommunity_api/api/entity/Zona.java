@@ -32,6 +32,4 @@ public class Zona {
 
     @Column(name = "colonia")
     private String colonia;
-
-      
 }

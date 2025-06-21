@@ -32,6 +32,4 @@ public class Casa {
     @ManyToOne
     @JoinColumn(name = "id_zona", referencedColumnName = "id_zona")
     private Zona idZona;
-
-    
 }

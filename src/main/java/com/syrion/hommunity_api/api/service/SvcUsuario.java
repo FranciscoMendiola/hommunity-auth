@@ -10,6 +10,5 @@ public interface SvcUsuario {
 
     public ResponseEntity<Usuario> getUsuario(Long id);
     public ResponseEntity<ApiResponse> createUsusario(DtoUsuarioIn in);
-
     
 }
