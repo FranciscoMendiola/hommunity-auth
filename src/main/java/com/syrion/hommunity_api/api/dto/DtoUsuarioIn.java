@@ -1,10 +1,9 @@
 package com.syrion.hommunity_api.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.syrion.hommunity_api.api.entity.Familia;
 import com.syrion.hommunity_api.api.entity.Zona;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -12,7 +11,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Getter
@@ -47,9 +45,10 @@ public class DtoUsuarioIn{
     @JsonProperty("idZona")
     @ManyToOne
     @JoinColumn(name = "id_zona", referencedColumnName = "id_zona")
+    @NotNull(message = "La zona es obligatoria")
     private Zona idZona;
     
-    @JsonProperty("IdFamilia")
+    @JsonProperty("idFamilia")
     @ManyToOne
     @JoinColumn(name = "id_familia", referencedColumnName = "id_familia")
     private Familia idFamilia;

@@ -4,20 +4,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.syrion.hommunity_api.api.dto.DtoUsuarioIn;
 import com.syrion.hommunity_api.api.entity.Usuario;
+import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 import com.syrion.hommunity_api.api.repository.UsuarioRepository;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
 import com.syrion.hommunity_api.exception.ApiException;
 import com.syrion.hommunity_api.exception.DBAccessException;
+import com.syrion.hommunity_api.common.maper.MapperUsuario;
 
 @Service
 public class SvcUsuarioImp implements SvcUsuario {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    MapperUsuario mapper;
 
     @Override
     public ResponseEntity<Usuario> getUsuario(Long id) {
@@ -35,6 +44,16 @@ public class SvcUsuarioImp implements SvcUsuario {
 
     @Override
     public ResponseEntity<ApiResponse> createUsusario(DtoUsuarioIn in) {
-        return null;
+        try {
+            in.setContraseña(passwordEncoder.encode(in.getContraseña()));
+
+            Usuario usuario = mapper.fromUsuario(in);
+            
+            usuarioRepository.save(usuario);
+
+            return new ResponseEntity<>(new ApiResponse("Usuario creado correctamente"), HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            throw new DBAccessException(e);
+        }
     }
 }
