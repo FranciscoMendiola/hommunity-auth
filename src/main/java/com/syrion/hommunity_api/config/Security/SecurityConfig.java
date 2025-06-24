@@ -34,6 +34,9 @@ public class SecurityConfig {
                 // Rutas protegidas (solo con roles específicos)
                 .requestMatchers(HttpMethod.GET, "/usuario/**").hasAnyAuthority("Administrador", "Residente")
 
+                //Ruta zona de administración
+                .requestMatchers(HttpMethod.POST, "/zona/**").hasAuthority("Administrador")
+
                 // Todo lo demás requiere autenticación
                 .anyRequest().authenticated()
             )
