@@ -1,9 +1,11 @@
 package com.syrion.hommunity_api.api.entity;
 import java.sql.Timestamp;
 
+import com.syrion.hommunity_api.api.dto.EstadoUsuarioConverter;
 import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +30,10 @@ public class Familia {
     private String apellido;
 
     @Column(name = "estado")
+    @Convert(converter = EstadoUsuarioConverter.class)
     private EstadoUsuario estado;
+
+
     
     @Column(name = "foto_identificacion")
     private String fotoIdentificacion;

@@ -37,6 +37,18 @@ public class SecurityConfig {
                 //Ruta zona de administración
                 .requestMatchers(HttpMethod.POST, "/zona/**").hasAuthority("Administrador")
 
+                // Rutas de casa
+                .requestMatchers(HttpMethod.POST, "/casa/**").hasAnyAuthority("Administrador", "Residente")
+                
+                .requestMatchers(HttpMethod.DELETE, "/casa/**").hasAnyAuthority("Administrador", "Residente")
+
+                // Rutas de familia
+                .requestMatchers(HttpMethod.POST, "/familia/**").hasAnyAuthority("Administrador", "Residente")
+                
+                .requestMatchers(HttpMethod.DELETE, "/familia/**").hasAnyAuthority("Administrador", "Residente")
+
+
+
                 // Todo lo demás requiere autenticación
                 .anyRequest().authenticated()
             )
