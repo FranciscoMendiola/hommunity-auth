@@ -1,8 +1,8 @@
 package com.syrion.hommunity_api.api.entity;
 import java.sql.Timestamp;
 
-import com.syrion.hommunity_api.api.common.mapper.MapperEstadoUsuario;
 import com.syrion.hommunity_api.api.enums.EstadoUsuario;
+import com.syrion.hommunity_api.common.mapper.MapperEstadoUsuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
