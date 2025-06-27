@@ -20,8 +20,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {
 
     private final String SECRET_KEY = "miClaveUltraSecretaQueDebeSerLarga1234567890";
-    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
-
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 1 dia
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
