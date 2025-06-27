@@ -26,7 +26,7 @@ public class DtoInvitadoIn {
     @NotNull(message = "El apellido paterno es obligatorio")
     private String apellidoPaterno;
 
-    @JsonProperty("apellidoMAterno")
+    @JsonProperty("apellidoMaterno")
     private String apellidoMaterno;
 
     @JsonProperty("fechaVisita")

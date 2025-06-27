@@ -1,6 +1,8 @@
 package com.syrion.hommunity_api.api.service;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -57,6 +59,9 @@ public class SvcInvitadoImp implements SvcInvitado {
     @Override
     public ResponseEntity<ApiResponse> createInvitado(DtoInvitadoIn in) {
         try {
+            if (in.getFechaVisita().before(Date.valueOf(LocalDate.now())))
+                throw new ApiException(HttpStatus.BAD_REQUEST, "La fecha de visita no puede ser anterior a la fecha actual.");
+
             Usuario usuario = repoUsuario.findById(in.getIdUsuario()).orElse(null);
 
             if (usuario == null)
