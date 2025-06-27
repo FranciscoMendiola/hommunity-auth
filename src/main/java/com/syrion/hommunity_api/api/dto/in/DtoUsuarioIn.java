@@ -1,4 +1,4 @@
-package com.syrion.hommunity_api.api.dto;
+package com.syrion.hommunity_api.api.dto.in;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.syrion.hommunity_api.api.entity.Familia;
@@ -15,7 +15,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name = "usuario")
 public class DtoUsuarioIn{
 
     @JsonProperty("nombre")

@@ -29,13 +29,19 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Rutas públicas
                 .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
 
-                // Rutas protegidas (solo con roles específicos)
+                // Usuario
+                .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
                 .requestMatchers(HttpMethod.GET, "/usuario/**").hasAnyAuthority("Administrador", "Residente")
 
-                //Ruta zona de administración
+                // Zona
                 .requestMatchers(HttpMethod.POST, "/zona/**").hasAuthority("Administrador")
+
+                // Invitado
+                .requestMatchers(HttpMethod.GET, "/invitado/**").hasAnyAuthority("Residente", "Administrador")
+                .requestMatchers(HttpMethod.POST, "/invitado").hasAnyAuthority("Residente", "Administrador")
+                .requestMatchers(HttpMethod.PATCH, "/invitado/**").hasAuthority("Administrador")
+
 
                 // Todo lo demás requiere autenticación
                 .anyRequest().authenticated()

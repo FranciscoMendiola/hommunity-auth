@@ -7,14 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.syrion.hommunity_api.api.dto.DtoUsuarioIn;
+import com.syrion.hommunity_api.api.dto.in.DtoUsuarioIn;
 import com.syrion.hommunity_api.api.entity.Usuario;
-import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 import com.syrion.hommunity_api.api.repository.UsuarioRepository;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
+import com.syrion.hommunity_api.common.mapper.MapperUsuario;
 import com.syrion.hommunity_api.exception.ApiException;
 import com.syrion.hommunity_api.exception.DBAccessException;
-import com.syrion.hommunity_api.common.maper.MapperUsuario;
 
 @Service
 public class SvcUsuarioImp implements SvcUsuario {

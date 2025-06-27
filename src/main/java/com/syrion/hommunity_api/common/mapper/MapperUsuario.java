@@ -1,8 +1,9 @@
-package com.syrion.hommunity_api.common.maper;
+package com.syrion.hommunity_api.common.mapper;
 
 import org.springframework.stereotype.Service;
-import com.syrion.hommunity_api.api.dto.DtoUsuarioIn;
+
 import com.syrion.hommunity_api.api.entity.Usuario;
+import com.syrion.hommunity_api.api.dto.in.DtoUsuarioIn;
 import com.syrion.hommunity_api.api.entity.Rol;
 import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 

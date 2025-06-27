@@ -1,4 +1,4 @@
-package com.syrion.hommunity_api.api.dto;
+package com.syrion.hommunity_api.common.mapper;
 
 import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 
@@ -6,7 +6,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true) // se aplica a todos los campos EstadoUsuario automáticamente
-public class EstadoUsuarioConverter implements AttributeConverter<EstadoUsuario, String> {
+public class MapperEstadoUsuario implements AttributeConverter<EstadoUsuario, String> {
 
     @Override
     public String convertToDatabaseColumn(EstadoUsuario estado) {
