@@ -2,7 +2,7 @@ package com.syrion.hommunity_api.api.service;
 
 import org.springframework.stereotype.Service;
 
-import com.syrion.hommunity_api.api.dto.DtoZonaIn;
+import com.syrion.hommunity_api.api.dto.in.DtoZonaIn;
 import com.syrion.hommunity_api.api.entity.Zona;
 import com.syrion.hommunity_api.api.repository.ZonaRepository;
 

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.syrion.hommunity_api.api.dto.DtoZonaIn;
+import com.syrion.hommunity_api.api.dto.in.DtoZonaIn;
 import com.syrion.hommunity_api.api.entity.Zona;
 import com.syrion.hommunity_api.api.service.SvcZona;
 

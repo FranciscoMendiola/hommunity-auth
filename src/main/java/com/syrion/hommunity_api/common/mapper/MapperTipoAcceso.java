@@ -1,4 +1,4 @@
-package com.syrion.hommunity_api.api.dto;
+package com.syrion.hommunity_api.common.mapper;
 
 import com.syrion.hommunity_api.api.enums.TipoAcceso;
 
@@ -6,7 +6,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
-public class TipoAccesoConverter implements AttributeConverter<TipoAcceso, String> {
+public class MapperTipoAcceso implements AttributeConverter<TipoAcceso, String> {
 
     @Override
     public String convertToDatabaseColumn(TipoAcceso tipo) {

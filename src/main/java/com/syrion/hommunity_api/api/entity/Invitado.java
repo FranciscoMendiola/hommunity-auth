@@ -2,7 +2,7 @@ package com.syrion.hommunity_api.api.entity;
 
 
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.sql.Time;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,10 +41,10 @@ public class Invitado {
     private Date fechaVisita;
 
     @Column(name = "hora_entrada")
-    private Timestamp horaEntrada;
+    private Time horaEntrada;
     
     @Column(name = "hora_salida")
-    private Timestamp horaSalida;
+    private Time horaSalida;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
