@@ -1,7 +1,7 @@
 package com.syrion.hommunity_api.api.entity;
 import java.sql.Timestamp;
 
-import com.syrion.hommunity_api.api.dto.EstadoUsuarioConverter;
+import com.syrion.hommunity_api.api.common.mapper.MapperEstadoUsuario;
 import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 
 import jakarta.persistence.Column;
@@ -30,7 +30,7 @@ public class Familia {
     private String apellido;
 
     @Column(name = "estado")
-    @Convert(converter = EstadoUsuarioConverter.class)
+    @Convert(converter = MapperEstadoUsuario.class)
     private EstadoUsuario estado;
 
 
