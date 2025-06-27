@@ -32,6 +32,8 @@ public class SecurityConfig {
 
                 // Usuario
                 .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
+
+                // Rutas protegidas (solo con roles específicos)
                 .requestMatchers(HttpMethod.GET, "/usuario/**").hasAnyAuthority("Administrador", "Residente")
 
                 // Zona
@@ -41,6 +43,18 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/invitado/**").hasAnyAuthority("Residente", "Administrador")
                 .requestMatchers(HttpMethod.POST, "/invitado").hasAnyAuthority("Residente", "Administrador")
                 .requestMatchers(HttpMethod.PATCH, "/invitado/**").hasAuthority("Administrador")
+
+
+                // Rutas de casa
+                .requestMatchers(HttpMethod.POST, "/casa/**").hasAnyAuthority("Administrador", "Residente")
+
+                .requestMatchers(HttpMethod.DELETE, "/casa/**").hasAnyAuthority("Administrador", "Residente")
+
+                // Rutas de familia
+                .requestMatchers(HttpMethod.POST, "/familia/**").hasAnyAuthority("Administrador", "Residente")
+
+                .requestMatchers(HttpMethod.DELETE, "/familia/**").hasAnyAuthority("Administrador", "Residente")
+
 
 
                 // Todo lo demás requiere autenticación
