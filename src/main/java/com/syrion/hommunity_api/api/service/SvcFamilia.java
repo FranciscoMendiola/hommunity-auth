@@ -5,5 +5,6 @@ import com.syrion.hommunity_api.api.dto.DtoFamiliaIn;
 public interface SvcFamilia {
     void crearFamilia(DtoFamiliaIn familiaIn);
     void eliminarFamilia(Long idFamilia);
+    Object obtenerFamiliaPorId(Long id);
 }
 

@@ -48,4 +48,12 @@ public class CasaController {
         return new ResponseEntity<>(casas, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('Administrador', 'Residente')")
+    public ResponseEntity<Casa> obtenerCasaPorId(@PathVariable Long id) {
+        Casa casa = svcCasa.obtenerCasaPorId(id);
+        return new ResponseEntity<>(casa, HttpStatus.OK);
+    }
+
+
 }

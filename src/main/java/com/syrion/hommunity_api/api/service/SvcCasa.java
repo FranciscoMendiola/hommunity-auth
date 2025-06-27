@@ -10,4 +10,6 @@ public interface SvcCasa {
     void crearCasa(DtoCasaIn casaIn);
     void eliminarCasa(Long idCasa);
     List<Casa> buscarPorZona(Long idZona);
+    Casa obtenerCasaPorId(Long id);
+
 }

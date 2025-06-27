@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,4 +37,11 @@ public class FamiliaController {
         svcFamilia.eliminarFamilia(id);
         return new ResponseEntity<>("Familia eliminada exitosamente", HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('Administrador', 'Residente')")
+    public ResponseEntity<?> obtenerFamiliaPorId(@PathVariable Long id) {
+        return new ResponseEntity<>(svcFamilia.obtenerFamiliaPorId(id), HttpStatus.OK);
+    }
+
 }

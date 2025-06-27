@@ -68,4 +68,12 @@ public class SvcFamiliaImp implements SvcFamilia {
         }
         familiaRepository.deleteById(idFamilia);
     }
+
+    @Override
+    public Object obtenerFamiliaPorId(Long id) {
+        return familiaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Familia no encontrada con id: "
+                        + id));
+    
+    }            
 }
