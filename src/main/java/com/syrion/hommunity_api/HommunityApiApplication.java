@@ -1,13 +1,13 @@
-package com.syrion.hommunity.auth;
+package com.syrion.hommunity_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AuthApplication {
+public class HommunityApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AuthApplication.class, args);
+		SpringApplication.run(HommunityApiApplication.class, args);
 	}
 
 }
