@@ -1,4 +1,4 @@
-package com.syrion.hommunity_api.api.dto;
+package com.syrion.hommunity_api.api.dto.in;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

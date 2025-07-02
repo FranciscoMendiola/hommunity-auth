@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.syrion.hommunity_api.api.dto.in.DtoUsuarioIn;
 import com.syrion.hommunity_api.api.entity.Usuario;
+import com.syrion.hommunity_api.api.dto.out.DtoUsuarioOut;
 import com.syrion.hommunity_api.api.service.SvcUsuario;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
 
@@ -25,7 +26,7 @@ public class UsuarioController {
 
     // Obtener usuario por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
+    public ResponseEntity<DtoUsuarioOut> getUsuarioById(@PathVariable Long id) {
         return svUsuario.getUsuario(id);
     }
 

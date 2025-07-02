@@ -3,61 +3,77 @@ package com.syrion.hommunity_api.api.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.syrion.hommunity_api.api.dto.DtoCasaIn;
+import com.syrion.hommunity_api.api.dto.in.DtoCasaIn;
+import com.syrion.hommunity_api.api.dto.out.DtoCasaOut;
 import com.syrion.hommunity_api.api.entity.Casa;
 import com.syrion.hommunity_api.api.entity.Zona;
 import com.syrion.hommunity_api.api.repository.CasaRepository;
 import com.syrion.hommunity_api.api.repository.ZonaRepository;
+import com.syrion.hommunity_api.common.dto.ApiResponse;
+import com.syrion.hommunity_api.common.mapper.MapperCasa;
+import com.syrion.hommunity_api.exception.ApiException;
+import com.syrion.hommunity_api.exception.DBAccessException;
 
 @Service
 public class SvcCasaImp implements SvcCasa {
 
-    private final CasaRepository casaRepository;
-    private final ZonaRepository zonaRepository;
+    @Autowired
+    private CasaRepository casaRepository;
 
-    public SvcCasaImp(CasaRepository casaRepository, ZonaRepository zonaRepository) {
-        this.casaRepository = casaRepository;
-        this.zonaRepository = zonaRepository;
-    }
+    @Autowired
+    private ZonaRepository zonaRepository;
+
+    @Autowired
+    private MapperCasa mapperCasa;
 
     @Override
-    public void crearCasa(DtoCasaIn casaIn) {
-        Optional<Zona> zona = zonaRepository.findById(casaIn.getIdZona());
-        if (zona.isEmpty()) {
-            throw new RuntimeException("Zona no encontrada con id: " + casaIn.getIdZona());
+    public ResponseEntity<ApiResponse> crearCasa(DtoCasaIn casaIn) {
+        try {
+            Zona zona = zonaRepository.findById(casaIn.getIdZona())
+                .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "Zona con id " + casaIn.getIdZona() + " no encontrada."));
+
+            Casa casa = mapperCasa.fromCasa(casaIn, zona);
+
+            casaRepository.save(casa);
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new ApiResponse("Casa creada exitosamente"));
+        } catch (DataAccessException e) {
+            throw new DBAccessException(e);
         }
-
-        Casa casa = new Casa();
-        casa.setNumero(casaIn.getNumero());
-        casa.setCalle(casaIn.getCalle());
-        casa.setIdZona(zona.get());
-
-        casaRepository.save(casa);
     }
 
     @Override
-    public void eliminarCasa(Long idCasa) {
+    public ResponseEntity<ApiResponse> eliminarCasa(Long idCasa) {
         if (!casaRepository.existsById(idCasa)) {
-            throw new RuntimeException("Casa no encontrada con id: " + idCasa);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse("Casa no encontrada con id: " + idCasa));
         }
 
         casaRepository.deleteById(idCasa);
+        return ResponseEntity.ok(new ApiResponse("Casa eliminada exitosamente"));
     }
 
     @Override
-    public List<Casa> buscarPorZona(Long idZona) {
-    return casaRepository.findByIdZonaIdZona(idZona);
+    public ResponseEntity<List<DtoCasaOut>> buscarPorZona(Long idZona) {
+        List<Casa> casas = casaRepository.findByIdZonaIdZona(idZona);
+        List<DtoCasaOut> casasOut = mapperCasa.fromCasaList(casas);
+        return ResponseEntity.ok(casasOut);
     }
 
     @Override
-    public Casa obtenerCasaPorId(Long id) {
-    return casaRepository.findById(id)
-                   .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Casa no encontrada"));
+    public ResponseEntity<DtoCasaOut> obtenerCasaPorId(Long id) {
+        Optional<Casa> casaOpt = casaRepository.findById(id);
+        if (casaOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        DtoCasaOut casaOut = mapperCasa.fromCasa(casaOpt.get());
+        return ResponseEntity.ok(casaOut);
     }
-
-
 }

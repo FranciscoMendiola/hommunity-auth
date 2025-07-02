@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.syrion.hommunity_api.api.dto.in.DtoInvitadoIn;
+import com.syrion.hommunity_api.api.dto.out.DtoInvitadoOut;
 import com.syrion.hommunity_api.api.entity.Invitado;
 import com.syrion.hommunity_api.api.entity.Usuario;
 import com.syrion.hommunity_api.api.repository.InvitadoRepository;
@@ -35,22 +36,26 @@ public class SvcInvitadoImp implements SvcInvitado {
     private UsuarioRepository repoUsuario;
 
     @Override
-    public ResponseEntity<List<Invitado>> getInvitados() {
+    public ResponseEntity<List<DtoInvitadoOut>> getInvitados() {
         try {
             List<Invitado> invitados = repoInvitado.findAll();
 
-            return new ResponseEntity<>(invitados, HttpStatus.OK);
+            List<DtoInvitadoOut> dtoInvitados = mapperInvitado.fromInvitados(invitados);
+
+            return new ResponseEntity<>(dtoInvitados, HttpStatus.OK);
         } catch (DataAccessException e) {
             throw new DBAccessException(e);
         }
     }
 
     @Override
-    public ResponseEntity<Invitado> getInvitado(Long id) {
+    public ResponseEntity<DtoInvitadoOut> getInvitado(Long id) {
         try {
             Invitado invitado = validateId(id);
 
-            return new ResponseEntity<>(invitado, HttpStatus.OK);
+            DtoInvitadoOut dtoInvitado = mapperInvitado.fromInvitado(invitado);
+
+            return new ResponseEntity<>(dtoInvitado, HttpStatus.OK);
         } catch (DataAccessException e) {
             throw new DBAccessException(e);
         }

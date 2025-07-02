@@ -1,35 +1,38 @@
-package com.syrion.hommunity_api.api.dto.in;
+package com.syrion.hommunity_api.api.dto.out;
 
 import java.sql.Date;
+import java.sql.Time;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class DtoInvitadoIn {
+public class DtoInvitadoOut {
+
+    @JsonProperty("idInvitado")
+    private Long idInvitado;
 
     @JsonProperty("nombre")
-    @NotNull(message = "El nombre es obligatorio") 
     private String nombre;
 
     @JsonProperty("apellidoPaterno")
-    @NotNull(message = "El apellido paterno es obligatorio")
     private String apellidoPaterno;
 
     @JsonProperty("apellidoMaterno")
     private String apellidoMaterno;
 
     @JsonProperty("fechaVisita")
-    @NotNull(message = "La fecha de visita es obligatoria")
     private Date fechaVisita;
 
+    @JsonProperty("horaEntrada")
+    private Time horaEntrada;
+    
+    @JsonProperty("horaSalida")
+    private Time horaSalida;
+
     @JsonProperty("idUsuario")
-    @NotNull(message = "El usuario residente es obligatorio")
     private Long idUsuario;
 }

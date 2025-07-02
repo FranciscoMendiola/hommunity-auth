@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.syrion.hommunity_api.api.entity.Usuario;
 import com.syrion.hommunity_api.api.dto.in.DtoUsuarioIn;
+import com.syrion.hommunity_api.api.dto.out.DtoUsuarioOut;
 import com.syrion.hommunity_api.api.entity.Rol;
 import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 
@@ -32,5 +33,23 @@ public class MapperUsuario {
         usuario.setIdRol(rol);
 
         return usuario;
+    }
+
+
+    public DtoUsuarioOut fromDtoUsuario(Usuario usuario) {
+        DtoUsuarioOut out = new DtoUsuarioOut();
+        
+        out.setIdUsuario(usuario.getIdUsuario());
+        out.setNombre(usuario.getNombre());
+        out.setApellidoMaterno(usuario.getApellidoMaterno());
+        out.setApellidoPaterno(usuario.getApellidoPaterno());
+        out.setCorreo(usuario.getCorreo());
+        out.setIdFamilia(usuario.getIdFamilia().getIdFamilia());
+        out.setIdZona(usuario.getIdZona().getIdZona());
+        out.setEstado(usuario.getEstado());
+        out.setFotoIdentificacion(usuario.getFotoIdentificacion());
+        out.setIdRol(usuario.getIdRol().getIdRol());
+
+        return out;
     }
 }
