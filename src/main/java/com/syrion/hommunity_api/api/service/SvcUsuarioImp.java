@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.syrion.hommunity_api.api.dto.in.DtoUsuarioIn;
+import com.syrion.hommunity_api.api.dto.out.DtoUsuarioOut;
 import com.syrion.hommunity_api.api.entity.Usuario;
 import com.syrion.hommunity_api.api.repository.UsuarioRepository;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
@@ -28,14 +29,17 @@ public class SvcUsuarioImp implements SvcUsuario {
     MapperUsuario mapper;
 
     @Override
-    public ResponseEntity<Usuario> getUsuario(Long id) {
+    public ResponseEntity<DtoUsuarioOut> getUsuario(Long id) {
         try {
             Usuario usuario = usuarioRepository.findById(id).orElse(null);
 
             if (usuario == null)
                 throw new ApiException(HttpStatus.NOT_FOUND, "El id del usuario no existe");
 
-            return new ResponseEntity<>(usuario, HttpStatus.OK);
+            DtoUsuarioOut usuarioOut = mapper.fromDtoUsuario(usuario);
+
+
+            return new ResponseEntity<>(usuarioOut, HttpStatus.OK);
         } catch (DataAccessException e) {
             throw new DBAccessException(e);
         }

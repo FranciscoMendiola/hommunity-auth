@@ -19,7 +19,6 @@ public class Casa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id_casa")
     private Long idCasa;
 

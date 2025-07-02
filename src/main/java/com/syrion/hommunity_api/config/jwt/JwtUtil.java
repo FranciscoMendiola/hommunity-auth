@@ -30,7 +30,6 @@ public class JwtUtil {
         // Manejar caso donde idRol es null
         claims.put("authorities", usuario.getIdRol() != null ? List.of(usuario.getIdRol().getNombreRol()) : List.of());
         claims.put("id", usuario.getIdUsuario());
-        claims.put("rol", usuario.getIdRol() != null ? usuario.getIdRol().getNombreRol() : "SIN_ROL");
         claims.put("estado", usuario.getEstado());
 
         return Jwts.builder()

@@ -2,11 +2,13 @@ package com.syrion.hommunity_api.api.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.syrion.hommunity_api.api.dto.DtoFamiliaIn;
+import com.syrion.hommunity_api.api.dto.in.DtoFamiliaIn;
+import com.syrion.hommunity_api.api.dto.out.DtoFamiliaOut;
 import com.syrion.hommunity_api.api.entity.Casa;
 import com.syrion.hommunity_api.api.entity.Familia;
 import com.syrion.hommunity_api.api.entity.Usuario;
@@ -14,6 +16,9 @@ import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 import com.syrion.hommunity_api.api.repository.CasaRepository;
 import com.syrion.hommunity_api.api.repository.FamiliaRepository;
 import com.syrion.hommunity_api.api.repository.UsuarioRepository;
+import com.syrion.hommunity_api.common.dto.ApiResponse;
+import com.syrion.hommunity_api.common.mapper.MapperFamilia;
+import com.syrion.hommunity_api.exception.ApiException;
 
 @Service
 public class SvcFamiliaImp implements SvcFamilia {
@@ -21,26 +26,25 @@ public class SvcFamiliaImp implements SvcFamilia {
     private final FamiliaRepository familiaRepository;
     private final CasaRepository casaRepository;
     private final UsuarioRepository usuarioRepository;
+    private final MapperFamilia mapperFamilia;
 
     public SvcFamiliaImp(FamiliaRepository familiaRepository,
                          CasaRepository casaRepository,
-                         UsuarioRepository usuarioRepository) {
+                         UsuarioRepository usuarioRepository,
+                         MapperFamilia mapperFamilia) {
         this.familiaRepository = familiaRepository;
         this.casaRepository = casaRepository;
         this.usuarioRepository = usuarioRepository;
+        this.mapperFamilia = mapperFamilia;
     }
 
     @Override
-    public void crearFamilia(DtoFamiliaIn familiaIn) {
-        Optional<Casa> casa = casaRepository.findById(familiaIn.getIdCasa());
-        if (casa.isEmpty()) {
-            throw new RuntimeException("Casa no encontrada con id: " + familiaIn.getIdCasa());
-        }
+    public ResponseEntity<ApiResponse> crearFamilia(DtoFamiliaIn familiaIn) {
+        Casa casa = casaRepository.findById(familiaIn.getIdCasa())
+                .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "Casa no encontrada con id: " + familiaIn.getIdCasa()));
 
-        Optional<Usuario> usuario = usuarioRepository.findById(familiaIn.getIdUsuarioRegistrador());
-        if (usuario.isEmpty()) {
-            throw new RuntimeException("Usuario registrador no encontrado con id: " + familiaIn.getIdUsuarioRegistrador());
-        }
+        Usuario usuario = usuarioRepository.findById(familiaIn.getIdUsuarioRegistrador())
+                .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "Usuario registrador no encontrado con id: " + familiaIn.getIdUsuarioRegistrador()));
 
         Familia familia = new Familia();
         familia.setApellido(familiaIn.getApellido());
@@ -49,31 +53,35 @@ public class SvcFamiliaImp implements SvcFamilia {
             EstadoUsuario estado = EstadoUsuario.fromValor(familiaIn.getEstado());
             familia.setEstado(estado);
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("EstadoUsuario inválido: " + familiaIn.getEstado());
+            throw new ApiException(HttpStatus.BAD_REQUEST, "EstadoUsuario inválido: " + familiaIn.getEstado());
         }
 
         familia.setFotoIdentificacion(familiaIn.getFotoIdentificacion());
         familia.setFechaRegistro(Timestamp.from(Instant.now()));
-
-        familia.setIdCasa(casa.get());
-        familia.setIdUsuarioRegistrador(usuario.get());
+        familia.setIdCasa(casa);
+        familia.setIdUsuarioRegistrador(usuario);
 
         familiaRepository.save(familia);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse("Familia creada exitosamente"));
     }
 
     @Override
-    public void eliminarFamilia(Long idFamilia) {
+    public ResponseEntity<ApiResponse> eliminarFamilia(Long idFamilia) {
         if (!familiaRepository.existsById(idFamilia)) {
-            throw new RuntimeException("Familia no encontrada con id: " + idFamilia);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse("Familia no encontrada con id: " + idFamilia));
         }
         familiaRepository.deleteById(idFamilia);
+        return ResponseEntity.ok(new ApiResponse("Familia eliminada exitosamente"));
     }
 
     @Override
-    public Object obtenerFamiliaPorId(Long id) {
-        return familiaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Familia no encontrada con id: "
-                        + id));
-    
-    }            
+    public ResponseEntity<DtoFamiliaOut> obtenerFamiliaPorId(Long id) {
+        Familia familia = familiaRepository.findById(id)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Familia no encontrada con id: " + id));
+        DtoFamiliaOut familiaOut = mapperFamilia.fromFamilia(familia);
+        return ResponseEntity.ok(familiaOut);
+    }
 }

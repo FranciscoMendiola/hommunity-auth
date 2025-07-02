@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.syrion.hommunity_api.api.dto.in.DtoInvitadoIn;
-import com.syrion.hommunity_api.api.entity.Invitado;
+import com.syrion.hommunity_api.api.dto.out.DtoInvitadoOut;
 import com.syrion.hommunity_api.api.service.SvcInvitado;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
 import com.syrion.hommunity_api.exception.ApiException;
@@ -30,12 +30,12 @@ public class InvitadoController {
     SvcInvitado svc;
     
     @GetMapping
-    public ResponseEntity<List<Invitado>> getInvitados() {
+    public ResponseEntity<List<DtoInvitadoOut>> getInvitados() {
         return svc.getInvitados();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Invitado> getInvitado(@Valid @PathVariable Long id) {
+    public ResponseEntity<DtoInvitadoOut> getInvitado(@Valid @PathVariable Long id) {
         return svc.getInvitado(id);
     }
 
