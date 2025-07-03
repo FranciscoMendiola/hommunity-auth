@@ -2,6 +2,7 @@ package com.syrion.hommunity_api.api.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -75,5 +76,10 @@ public class SvcFamiliaImp implements SvcFamilia {
                 .orElseThrow(() -> new RuntimeException("Familia no encontrada con id: "
                         + id));
     
-    }            
+    }   
+    
+    @Override
+    public List<Familia> obtenerFamiliasPorZona(Long idZona) {
+        return familiaRepository.findByIdCasaIdZonaIdZona(idZona);
+    }
 }

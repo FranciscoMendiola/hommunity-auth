@@ -1,5 +1,7 @@
 package com.syrion.hommunity_api.api.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.syrion.hommunity_api.api.dto.DtoFamiliaIn;
+import com.syrion.hommunity_api.api.entity.Familia;
 import com.syrion.hommunity_api.api.service.SvcFamilia;
 
 @RestController
@@ -44,4 +47,9 @@ public class FamiliaController {
         return new ResponseEntity<>(svcFamilia.obtenerFamiliaPorId(id), HttpStatus.OK);
     }
 
+    @GetMapping("/zona/{idZona}")
+    public ResponseEntity<List<Familia>> obtenerFamiliasPorZona(@PathVariable Long idZona) {
+    List<Familia> familias = svcFamilia.obtenerFamiliasPorZona(idZona);
+    return new ResponseEntity<>(familias, HttpStatus.OK);
+}
 }

@@ -55,6 +55,9 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.DELETE, "/familia/**").hasAnyAuthority("Administrador", "Residente")
 
+                // Familias por zona
+                .requestMatchers(HttpMethod.GET, "/familia/zona/**").permitAll()
+
 
 
                 // Todo lo demás requiere autenticación
