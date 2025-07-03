@@ -38,6 +38,7 @@ public class SecurityConfig {
 
                 // Zona
                 .requestMatchers(HttpMethod.POST, "/zona/**").hasAuthority("Administrador")
+                .requestMatchers(HttpMethod.GET, "/zona/**").permitAll()
 
                 // Invitado
                 .requestMatchers(HttpMethod.GET, "/invitado/**").hasAnyAuthority("Residente", "Administrador")
