@@ -1,5 +1,7 @@
 package com.syrion.hommunity_api.api.service;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.syrion.hommunity_api.api.dto.in.DtoFamiliaIn;
@@ -10,4 +12,5 @@ public interface SvcFamilia {
     ResponseEntity<ApiResponse> crearFamilia(DtoFamiliaIn familiaIn);
     ResponseEntity<ApiResponse> eliminarFamilia(Long idFamilia);
     ResponseEntity<DtoFamiliaOut> obtenerFamiliaPorId(Long id);
+    ResponseEntity<List<DtoFamiliaOut>> obtenerFamiliasPorZona(Long idZona);
 }
