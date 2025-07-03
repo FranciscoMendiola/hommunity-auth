@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.syrion.hommunity_api.api.dto.in.DtoUsuarioIn;
-import com.syrion.hommunity_api.api.entity.Usuario;
 import com.syrion.hommunity_api.api.dto.out.DtoUsuarioOut;
 import com.syrion.hommunity_api.api.service.SvcUsuario;
 import com.syrion.hommunity_api.common.dto.ApiResponse;

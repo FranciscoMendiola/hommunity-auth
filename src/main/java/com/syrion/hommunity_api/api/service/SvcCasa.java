@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.syrion.hommunity_api.api.dto.in.DtoCasaIn;
-import com.syrion.hommunity_api.api.entity.Casa;
 import com.syrion.hommunity_api.api.dto.out.DtoCasaOut;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
 
