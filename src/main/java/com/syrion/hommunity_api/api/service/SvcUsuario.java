@@ -10,5 +10,6 @@ public interface SvcUsuario {
 
     public ResponseEntity<DtoUsuarioOut> getUsuario(Long id);
     public ResponseEntity<ApiResponse> createUsusario(DtoUsuarioIn in);
-    
+    public ResponseEntity<ApiResponse> deleteUsuario(Long id);
+    public ResponseEntity<ApiResponse> updateUsuario(Long id, DtoUsuarioIn in);
 }

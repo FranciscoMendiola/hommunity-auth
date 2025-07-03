@@ -59,4 +59,47 @@ public class SvcUsuarioImp implements SvcUsuario {
             throw new DBAccessException(e);
         }
     }
+
+    @Override
+    public ResponseEntity<ApiResponse> deleteUsuario(Long id) {
+        try {
+            Usuario usuario = usuarioRepository.findById(id).orElse(null);
+
+            if (usuario == null)
+                throw new ApiException(HttpStatus.NOT_FOUND, "El id del usuario no existe");
+
+            usuarioRepository.delete(usuario);
+
+            return new ResponseEntity<>(new ApiResponse("Usuario eliminado correctamente"), HttpStatus.OK);
+        } catch (DataAccessException e) {
+            throw new DBAccessException(e);
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> updateUsuario(Long id, DtoUsuarioIn in) {
+        try {
+            Usuario usuario = usuarioRepository.findById(id).orElse(null);
+
+            if (usuario == null)
+                throw new ApiException(HttpStatus.NOT_FOUND, "El id del usuario no existe");
+
+            
+                usuario.setNombre(in.getNombre());
+                usuario.setCorreo(in.getCorreo());
+                usuario.setContraseña(passwordEncoder.encode(in.getContraseña()));
+                usuario.setApellidoMaterno(in.getApellidoMaterno());
+                usuario.setApellidoPaterno(in.getApellidoPaterno());
+                usuario.setFotoIdentificacion(in.getFotoIdentificacion());
+                
+            
+
+            usuarioRepository.save(usuario);
+
+            return new ResponseEntity<>(new ApiResponse("Usuario actualizado correctamente"), HttpStatus.OK);
+        } catch (DataAccessException e) {
+            throw new DBAccessException(e);
+        }
+        
+    }
 }

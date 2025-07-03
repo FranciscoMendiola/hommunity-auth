@@ -16,7 +16,6 @@ public class DtoCasaIn {
 
     @JsonProperty("calle")
     @NotNull(message = "La calle es obligatoria")
-
     private String calle;
 
     @JsonProperty("idZona")   
