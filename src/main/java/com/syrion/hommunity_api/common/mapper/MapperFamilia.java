@@ -1,5 +1,8 @@
 package com.syrion.hommunity_api.common.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.syrion.hommunity_api.api.dto.out.DtoFamiliaOut;
@@ -24,6 +27,14 @@ public class MapperFamilia {
         return out;
     }
 
-    
+    public List<DtoFamiliaOut> fromListDto(List<Familia> familias) {
+        List<DtoFamiliaOut> out = new ArrayList<>();
+
+        for (Familia familia : familias) {
+            out.add(fromFamilia(familia));
+        }
+
+        return out;
+    }
 }
 

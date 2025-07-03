@@ -19,6 +19,8 @@ import com.syrion.hommunity_api.api.dto.out.DtoFamiliaOut;
 import com.syrion.hommunity_api.api.service.SvcFamilia;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/familia")
 public class FamiliaController {
@@ -40,13 +42,13 @@ public class FamiliaController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('Administrador', 'Residente')")
-    public ResponseEntity<?> obtenerFamiliaPorId(@PathVariable Long id) {
-        return new ResponseEntity<>(svcFamilia.obtenerFamiliaPorId(id), HttpStatus.OK);
+    public ResponseEntity<DtoFamiliaOut> obtenerFamiliaPorId(@PathVariable Long id) {
+        return svcFamilia.obtenerFamiliaPorId(id);
     }
 
     @GetMapping("/zona/{idZona}")
-    public ResponseEntity<List<DtoFamiliaOut>> obtenerFamiliasPorZona(@PathVariable Long idZona) {
+    public ResponseEntity<List<DtoFamiliaOut>> obtenerFamiliasPorZona(@Valid @PathVariable Long idZona) {
         
-        return new ResponseEntity<>(svcFamilia.obtenerFamiliasPorZona(idZona), HttpStatus.OK);
+        return svcFamilia.obtenerFamiliasPorZona(idZona);
 }
 }
