@@ -47,7 +47,7 @@ public class SecurityConfig {
 
 
                 // Rutas de casa
-                .requestMatchers(HttpMethod.POST, "/casa/**").hasAnyAuthority("Administrador", "Residente")
+                .requestMatchers(HttpMethod.POST, "/casa/**").hasAnyAuthority("Administrador")
 
                 .requestMatchers(HttpMethod.DELETE, "/casa/**").hasAnyAuthority("Administrador", "Residente")
 

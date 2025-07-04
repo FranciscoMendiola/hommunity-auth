@@ -33,7 +33,7 @@ public class SvcCasaImp implements SvcCasa {
     private MapperCasa mapperCasa;
 
     @Override
-    public ResponseEntity<ApiResponse> crearCasa(DtoCasaIn casaIn) {
+    public ResponseEntity<DtoCasaOut> crearCasa(DtoCasaIn casaIn) {
         try {
             Zona zona = zonaRepository.findById(casaIn.getIdZona())
                 .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "Zona con id " + casaIn.getIdZona() + " no encontrada."));
@@ -42,8 +42,10 @@ public class SvcCasaImp implements SvcCasa {
 
             casaRepository.save(casa);
 
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new ApiResponse("Casa creada exitosamente"));
+            DtoCasaOut casaOut = mapperCasa.fromCasa(casa);
+
+            return new ResponseEntity<>(casaOut, HttpStatus.CREATED);
+            
         } catch (DataAccessException e) {
             throw new DBAccessException(e);
         }

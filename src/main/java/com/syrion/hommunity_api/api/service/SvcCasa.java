@@ -10,7 +10,7 @@ import com.syrion.hommunity_api.common.dto.ApiResponse;
 
 
 public interface SvcCasa {
-    ResponseEntity<ApiResponse> crearCasa(DtoCasaIn casaIn);
+    ResponseEntity<DtoCasaOut> crearCasa(DtoCasaIn casaIn);
     ResponseEntity<ApiResponse> eliminarCasa(Long idCasa);
     ResponseEntity<List<DtoCasaOut>> buscarPorZona(Long idZona);
     ResponseEntity<DtoCasaOut> obtenerCasaPorId(Long id);

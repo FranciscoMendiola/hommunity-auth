@@ -48,7 +48,7 @@ public class CasaController {
     @PostMapping
     @PreAuthorize("hasAnyAuthority('Administrador', 'Residente')")
     @Operation(summary = "Crear casa", description = "Permite crear una nueva casa en el sistema.")
-    public ResponseEntity<ApiResponse> crearCasa(@RequestBody DtoCasaIn casaIn) {
+    public ResponseEntity<DtoCasaOut> crearCasa(@RequestBody DtoCasaIn casaIn) {
         return svcCasa.crearCasa(casaIn);
     }
 
