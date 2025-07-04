@@ -33,8 +33,6 @@ public class Familia {
     @Convert(converter = MapperEstadoUsuario.class)
     private EstadoUsuario estado;
 
-
-    
     @Column(name = "foto_identificacion")
     private String fotoIdentificacion;
 

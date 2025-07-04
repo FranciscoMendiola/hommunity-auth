@@ -19,31 +19,38 @@ import com.syrion.hommunity_api.api.service.SvcQr;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
 import com.syrion.hommunity_api.exception.ApiException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/qr")
+@Tag(name = "QR", description = "Gestión de códigos QR")
 public class QrController {
 
     @Autowired
     private SvcQr svc;
 
     @GetMapping
+    @Operation(summary = "Obtener lista de códigos QR", description = "Permite obtener una lista de todos los códigos QR registrados en el sistema.")
     public ResponseEntity<List<QR>> getCodigos() {
         return svc.getCodigos();
     }
 
     @GetMapping("/active")
+    @Operation(summary = "Obtener códigos QR activos", description = "Permite obtener una lista de códigos QR que están activos en el sistema.")
     public ResponseEntity<List<QR>> getCodigosActivos() {
         return svc.getCodigosActivos();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Obtener código QR por ID", description = "Permite obtener los detalles de un código QR específico por su ID.")
     public ResponseEntity<QR> getCodigo(@Valid @PathVariable Long id) {
         return svc.getCodigo(id);   
     }
 
     @PostMapping
+    @Operation(summary = "Crear código QR", description = "Permite crear un nuevo código QR en el sistema.")
     public ResponseEntity<ApiResponse> createCodigo(@Valid @RequestBody DtoCodigoIn in, BindingResult bindingResult) {
 		if (bindingResult.hasErrors())
 			throw new ApiException(HttpStatus.BAD_REQUEST, bindingResult.getFieldError().getDefaultMessage());
@@ -51,6 +58,7 @@ public class QrController {
     }
 
     @PostMapping("/{id}/validate")
+    @Operation(summary = "Validar código QR", description = "Permite validar y usar (por única vez) un código QR por su ID.")
     public ResponseEntity<ApiResponse> validar(@Valid @PathVariable Long id) {
         return svc.validar(id);
     }

@@ -1,7 +1,5 @@
 package com.syrion.hommunity_api.api.dto.in;
 
-import org.springframework.lang.NonNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;

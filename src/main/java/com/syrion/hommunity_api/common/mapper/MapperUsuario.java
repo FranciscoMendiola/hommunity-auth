@@ -1,12 +1,14 @@
 package com.syrion.hommunity_api.common.mapper;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.syrion.hommunity_api.api.entity.Usuario;
+import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 import com.syrion.hommunity_api.api.dto.in.DtoUsuarioIn;
 import com.syrion.hommunity_api.api.dto.out.DtoUsuarioOut;
 import com.syrion.hommunity_api.api.entity.Rol;
-import com.syrion.hommunity_api.api.enums.EstadoUsuario;
 
 @Service
 public class MapperUsuario {
@@ -18,15 +20,10 @@ public class MapperUsuario {
         usuario.setApellidoPaterno(in.getApellidoPaterno());
         usuario.setCorreo(in.getCorreo());
         usuario.setContraseña(in.getContraseña());
-        if (in.getIdFamilia() != null) {
-            usuario.setEstado(EstadoUsuario.APROBADO);
-            usuario.setIdFamilia(in.getIdFamilia());
-        } else {
-            usuario.setEstado(EstadoUsuario.PENDIENTE);
-        }
-        usuario.setIdZona(in.getIdZona());
         usuario.setFotoIdentificacion(in.getFotoIdentificacion());
 
+        usuario.setEstado(EstadoUsuario.PENDIENTE);
+        
         Rol rol = new Rol();
         rol.setIdRol(1L);
         rol.setNombreRol("Residente");
@@ -50,6 +47,14 @@ public class MapperUsuario {
         out.setFotoIdentificacion(usuario.getFotoIdentificacion());
         out.setIdRol(usuario.getIdRol().getIdRol());
 
+        return out;
+    }
+
+    public List<DtoUsuarioOut> fromListDto(List<Usuario> usuarios) {
+        List<DtoUsuarioOut> out = new java.util.ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            out.add(fromDtoUsuario(usuario));
+        }
         return out;
     }
 }

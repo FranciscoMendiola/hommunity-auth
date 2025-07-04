@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.syrion.hommunity_api.api.dto.in.DtoFamiliaIn;
+import com.syrion.hommunity_api.api.dto.in.DtoUsuarioRegistradorIn;
 import com.syrion.hommunity_api.api.dto.out.DtoFamiliaOut;
 import com.syrion.hommunity_api.api.entity.Casa;
 import com.syrion.hommunity_api.api.entity.Familia;
@@ -28,23 +29,20 @@ import com.syrion.hommunity_api.exception.DBAccessException;
 @Service
 public class SvcFamiliaImp implements SvcFamilia {
 
-    private final FamiliaRepository familiaRepository;
-    private final CasaRepository casaRepository;
-    private final UsuarioRepository usuarioRepository;
+    @Autowired
+    private FamiliaRepository familiaRepository;
+
+    @Autowired
+    private CasaRepository casaRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    
+    @Autowired
     private MapperFamilia mapperFamilia;
 
     @Autowired
     private ZonaRepository zonaRepository;
-
-    public SvcFamiliaImp(FamiliaRepository familiaRepository,
-                         CasaRepository casaRepository,
-                         UsuarioRepository usuarioRepository,
-                         MapperFamilia mapperFamilia) {
-        this.familiaRepository = familiaRepository;
-        this.casaRepository = casaRepository;
-        this.usuarioRepository = usuarioRepository;
-        this.mapperFamilia = mapperFamilia;
-    }
 
     @Override
     public ResponseEntity<ApiResponse> crearFamilia(DtoFamiliaIn familiaIn) {
@@ -108,5 +106,33 @@ public class SvcFamiliaImp implements SvcFamilia {
         } catch (DataAccessException e) {
             throw new DBAccessException(e);
         }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> updateUsuarioRegistrador(Long idFamilia, DtoUsuarioRegistradorIn in) {
+        try {
+            Familia familia = validateId(idFamilia);
+
+            Usuario usuarioRegistrador = usuarioRepository.findById(in.getIdUsuarioRegistrador())
+                    .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "Usuario no encontrado con id: " + in.getIdUsuarioRegistrador()));
+
+            familia.setIdUsuarioRegistrador(usuarioRegistrador);
+
+            familiaRepository.save(familia);
+
+            return new ResponseEntity<>(new ApiResponse("Usuario registrador actualizado correctamente"), HttpStatus.OK);
+        } catch (DataAccessException e) {
+            throw new DBAccessException(e);
+        }
+    }
+
+    private Familia validateId(Long id) {
+        Familia familia = familiaRepository.findById(id).orElse(null);
+
+        if (familia == null)
+            throw new ApiException(HttpStatus.NOT_FOUND, "Familia no encontrada con id: " + id);
+
+
+        return familia;
     }
 }

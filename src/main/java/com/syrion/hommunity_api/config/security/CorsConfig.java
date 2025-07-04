@@ -1,4 +1,4 @@
-package com.syrion.hommunity_api.config.Security;
+package com.syrion.hommunity_api.config.security;
 import java.util.Arrays;
 
 import org.springframework.http.HttpMethod;
