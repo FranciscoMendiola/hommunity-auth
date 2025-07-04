@@ -8,7 +8,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.3</version>
         <relativePath /> <!-- lookup parent from repository -->
-    </parent>
+    </parent> 
     <groupId>com.syrion</groupId> <!-- ola Yio, ola chesko -->
     <artifactId>hommunity-Api</artifactId>
     <version>1.0.1</version>
