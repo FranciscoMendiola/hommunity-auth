@@ -15,10 +15,13 @@ import com.syrion.hommunity_api.api.dto.out.DtoAuthOut;
 import com.syrion.hommunity_api.api.service.SvcAuth;
 import com.syrion.hommunity_api.exception.ApiException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Auth", description = "Autenticación de usuarios")
 public class AuthController {
 
     @Autowired
@@ -26,13 +29,13 @@ public class AuthController {
 
     // Login de usuario registrado y aprobado
     @PostMapping
+    @Operation(summary = "Iniciar sesión (Login)", description = "Permite a un usuario registrado iniciar sesión en la aplicación.")
     public ResponseEntity<DtoAuthOut> login(@Valid @RequestBody DtoAuthIn in, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             String errorMessage = fieldError != null ? fieldError.getDefaultMessage() : "Validation error";
             throw new ApiException(HttpStatus.BAD_REQUEST, errorMessage);
         }
-
         return svc.login(in);
     }
 }
