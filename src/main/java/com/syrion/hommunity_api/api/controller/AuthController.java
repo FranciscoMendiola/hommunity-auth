@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,14 @@ public class AuthController {
     @Autowired
     private SvcAuth svc;
 
-    @PostMapping  
+    // Login de usuario registrado y aprobado
+    @PostMapping
     public ResponseEntity<DtoAuthOut> login(@Valid @RequestBody DtoAuthIn in, BindingResult bindingResult) {
-		if (bindingResult.hasErrors())
-			throw new ApiException(HttpStatus.BAD_REQUEST, bindingResult.getFieldError().getDefaultMessage());
+        if (bindingResult.hasErrors()) {
+            FieldError fieldError = bindingResult.getFieldError();
+            String errorMessage = fieldError != null ? fieldError.getDefaultMessage() : "Validation error";
+            throw new ApiException(HttpStatus.BAD_REQUEST, errorMessage);
+        }
 
         return svc.login(in);
     }

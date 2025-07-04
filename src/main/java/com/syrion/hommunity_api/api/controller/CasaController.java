@@ -32,16 +32,16 @@ public class CasaController {
     public ResponseEntity<ApiResponse> eliminarCasa(@PathVariable Long id) {
         return svcCasa.eliminarCasa(id);
     }
-
-    @GetMapping("/zona/{idZona}")
-    @PreAuthorize("hasAnyAuthority('Administrador', 'Residente')")
-    public ResponseEntity<List<DtoCasaOut>> obtenerPorZona(@PathVariable Long idZona) {
-        return svcCasa.buscarPorZona(idZona);
-    }
-
+    
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('Administrador', 'Residente')")
     public ResponseEntity<DtoCasaOut> obtenerCasaPorId(@PathVariable Long id) {
         return svcCasa.obtenerCasaPorId(id);
+    }
+
+    @GetMapping("/zona/{idZona}")
+    @PreAuthorize("hasAnyAuthority('Administrador', 'Residente')")
+    public ResponseEntity<List<DtoCasaOut>> obtenerCasasPorZona(@PathVariable Long idZona) {
+        return svcCasa.buscarPorZona(idZona);
     }
 }

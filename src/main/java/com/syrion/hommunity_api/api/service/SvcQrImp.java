@@ -98,7 +98,7 @@ public class SvcQrImp implements SvcQr {
                 if (qr.getVigente())
                     qr.setVigente(false);
                     repoQr.save(qr);
-                throw new ApiException(HttpStatus.BAD_REQUEST, "El QR ha expirado.");
+                throw new ApiException(HttpStatus.BAD_REQUEST, "El codigo QR ha expirado.");
             }
 
             if (!qr.getVigente())
@@ -108,7 +108,7 @@ public class SvcQrImp implements SvcQr {
             qr.setVigente(false);
             repoQr.save(qr);
 
-            return new ResponseEntity<>(new ApiResponse("Codigo QR validado correctamente"), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new ApiResponse("Codigo QR validado correctamente"), HttpStatus.OK);
         } catch (ApiException e) {
             throw e;
         } catch (DataAccessException e) {

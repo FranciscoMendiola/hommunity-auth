@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.syrion.hommunity_api.api.dto.in.DtoZonaIn;
 import com.syrion.hommunity_api.api.dto.out.DtoZonaOut;
-import com.syrion.hommunity_api.api.entity.Zona;
 import com.syrion.hommunity_api.api.service.SvcZona;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
 

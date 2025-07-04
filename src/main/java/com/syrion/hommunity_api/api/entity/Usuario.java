@@ -33,8 +33,8 @@ public class Usuario {
 
     @Column(name = "apellido_materno")
     private String apellidoMaterno;
+    
     @Column(name = "correo")
-
     private String correo;
 
     @Column(name = "contraseña")
