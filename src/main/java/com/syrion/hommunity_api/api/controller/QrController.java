@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.syrion.hommunity_api.api.dto.in.DtoCodigoIn;
+import com.syrion.hommunity_api.api.dto.in.DtoCodigoResidenteIn;
 import com.syrion.hommunity_api.api.entity.QR;
 import com.syrion.hommunity_api.api.service.SvcQr;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
@@ -62,4 +63,13 @@ public class QrController {
     public ResponseEntity<ApiResponse> validar(@Valid @PathVariable Long id) {
         return svc.validar(id);
     }
+
+    @PostMapping("/residente")
+    @Operation(summary = "Crear código QR para residente", description = "Permite crear un código QR para un residente con vigencia de acceso prolongada.")
+    public ResponseEntity<ApiResponse> createCodigoResidente(@Valid @RequestBody DtoCodigoResidenteIn in, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new ApiException(HttpStatus.BAD_REQUEST, bindingResult.getFieldError().getDefaultMessage());
+        return svc.createCodigoResidente(in);
+    }
+
 }

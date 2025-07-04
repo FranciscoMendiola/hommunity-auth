@@ -11,10 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.syrion.hommunity_api.api.dto.in.DtoCodigoIn;
+import com.syrion.hommunity_api.api.dto.in.DtoCodigoResidenteIn;
 import com.syrion.hommunity_api.api.entity.Invitado;
 import com.syrion.hommunity_api.api.entity.QR;
+import com.syrion.hommunity_api.api.entity.Usuario;
 import com.syrion.hommunity_api.api.repository.InvitadoRepository;
 import com.syrion.hommunity_api.api.repository.QrRepository;
+import com.syrion.hommunity_api.api.repository.UsuarioRepository;
 import com.syrion.hommunity_api.common.dto.ApiResponse;
 import com.syrion.hommunity_api.common.mapper.MapperQR;
 import com.syrion.hommunity_api.exception.ApiException;
@@ -31,6 +34,10 @@ public class SvcQrImp implements SvcQr {
 
     @Autowired
     private InvitadoRepository repoInvitado;
+
+    @Autowired
+    private UsuarioRepository repoUsuario;
+
 
 
     @Override
@@ -94,12 +101,15 @@ public class SvcQrImp implements SvcQr {
         try {
             QR qr = validateId(id);
 
-            if (qr.getIdInvitado().getFechaVisita().before(Date.valueOf(LocalDate.now()))) {
-                if (qr.getVigente())
+            if (qr.getIdInvitado() != null) {
+                if (qr.getIdInvitado().getFechaVisita().before(Date.valueOf(LocalDate.now()))) {
                     qr.setVigente(false);
                     repoQr.save(qr);
-                throw new ApiException(HttpStatus.BAD_REQUEST, "El codigo QR ha expirado.");
+                    throw new ApiException(HttpStatus.BAD_REQUEST, "El código QR ha expirado.");
+                }
             }
+            // Si es de residente, no requiere esta validación de fecha
+
 
             if (!qr.getVigente())
                 throw new ApiException(HttpStatus.BAD_REQUEST, "El codigo QR ya ha sido utilizado.");
@@ -125,4 +135,21 @@ public class SvcQrImp implements SvcQr {
 
         return qr;
     }
+
+    @Override
+    public ResponseEntity<ApiResponse> createCodigoResidente(DtoCodigoResidenteIn in) {
+        try {
+            Usuario usuario = repoUsuario.findById(in.getIdUsuario())
+                    .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "El usuario residente no está registrado."));
+
+            QR qr = mapper.fromQR(in, usuario);
+
+            repoQr.save(qr);
+
+            return new ResponseEntity<>(new ApiResponse("Código QR para residente creado correctamente"), HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            throw new DBAccessException(e);
+        }
+    }
+
 }

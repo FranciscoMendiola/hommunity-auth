@@ -59,7 +59,8 @@ public class SecurityConfig {
                 // Familias por zona
                 .requestMatchers(HttpMethod.GET, "/familia/zona/**").permitAll()
 
-
+                // Rutas de QR
+                .requestMatchers(HttpMethod.POST, "/qr/residente").hasAnyAuthority("Residente")
 
                 // Todo lo demás requiere autenticación
                 .anyRequest().authenticated()

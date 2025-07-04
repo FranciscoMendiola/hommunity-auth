@@ -36,4 +36,8 @@ public class QR {
     @ManyToOne
     @JoinColumn(name = "id_invitado", referencedColumnName = "id_invitado")
     private Invitado idInvitado;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    private Usuario idUsuario;
 }
