@@ -17,10 +17,15 @@ public class DtoFamiliaIn {
     @NotBlank(message = "El apellido no puede estar en blanco")
     private String apellido;
 
+<<<<<<< Updated upstream
     @JsonProperty("estado")
     @NotNull(message = "El estado es obligatorio")
     @NotBlank(message = "El estado no puede estar en blanco")
     private String estado;
+=======
+    // @JsonProperty("estado")
+    // private String estado;
+>>>>>>> Stashed changes
 
     @JsonProperty("fotoIdentificacion")
     @NotNull(message = "La foto de identificación es obligatoria")
@@ -32,5 +37,10 @@ public class DtoFamiliaIn {
     private Long idCasa;
 
     @JsonProperty("idUsuarioRegistrador")
+<<<<<<< Updated upstream
     private Long idUsuarioRegistrador;   
+=======
+    @NotNull(message = "El usuario registrador es obligatorio")
+    private Long idUsuarioRegistrador;
+>>>>>>> Stashed changes
 }

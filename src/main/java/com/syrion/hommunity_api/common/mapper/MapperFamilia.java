@@ -15,7 +15,7 @@ public class MapperFamilia {
         DtoFamiliaOut out = new DtoFamiliaOut();
         out.setIdFamilia(familia.getIdFamilia());
         out.setApellido(familia.getApellido());
-        out.setEstado(familia.getEstado() != null ? familia.getEstado().name() : null);
+        out.setEstado(familia.getEstado() != null ? familia.getEstado().getValor() : null);
         out.setFotoIdentificacion(familia.getFotoIdentificacion());
         out.setFechaRegistro(familia.getFechaRegistro());
         out.setIdCasa(familia.getIdCasa() != null ? familia.getIdCasa().getIdCasa() : null);

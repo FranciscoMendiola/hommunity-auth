@@ -55,12 +55,7 @@ public class SvcFamiliaImp implements SvcFamilia {
         Familia familia = new Familia();
         familia.setApellido(familiaIn.getApellido());
 
-        try {
-            EstadoUsuario estado = EstadoUsuario.fromValor(familiaIn.getEstado());
-            familia.setEstado(estado);
-        } catch (IllegalArgumentException e) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "EstadoUsuario inválido: " + familiaIn.getEstado());
-        }
+        familia.setEstado(EstadoUsuario.APROBADO);
 
         familia.setFotoIdentificacion(familiaIn.getFotoIdentificacion());
         familia.setFechaRegistro(Timestamp.from(Instant.now()));
