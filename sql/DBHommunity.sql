@@ -81,8 +81,8 @@ CREATE TABLE Invitado (
     apellido_paterno VARCHAR(100) NOT NULL,
     apellido_materno VARCHAR(100),
     fecha_visita DATE NOT NULL,
-    hora_entrada TIME NOT NULL,
-    hora_salida TIME NOT NULL,
+    fecha_entrada TIMESTAMP NOT NULL,
+    fecha_salida TIMESTAMP NOT NULL,
     id_usuario INT,
     PRIMARY KEY (id_invitado),
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
